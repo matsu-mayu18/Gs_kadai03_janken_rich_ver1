@@ -1,0 +1,313 @@
+body {
+  color: #333333;
+  font-family: "noto sans JP", "Open Sans", "ヒラギノ角ゴ ProN W3",
+    Hiragino Kaku Gothic ProN, "メイリオ", Meiryo, sans-serif;
+  font-size: 1.6rem; /*bodyが16pxに設定された*/
+}
+
+a {
+  text-decoration: none;
+}
+
+.header-wrap {
+  width: 1200px;
+  height: 150px;
+  margin: auto;
+  background-color: #f5f4f0;
+
+  /*ヘッダーコンテンツの横並び*/
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  border-bottom: solid 10px #778899;
+}
+
+.header-wrap img {
+  /*画像のトリミング*/
+  width: 300px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.header-list {
+  /* ヘッダーのリストサイドの幅・高さ */
+  width: 640px;
+
+  /*リスト側のflex-box*/
+  display: flex;
+  justify-content: space-between; /*リストの各項目を等間隔配置*/
+  align-items: center; /*listをheaderの上下中央に-*/
+
+  /*右端にmargin*/
+  margin-right: 10px;
+}
+
+.header-list li {
+  /* リストの各項目のサイズ */
+  width: 200px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #bc8f8f;
+
+  padding: 40px 0;
+}
+
+.header-list li:hover {
+  background-color: #fff;
+}
+
+/*hero-image*/
+.hero-wrapper {
+  width: 1200px;
+  height: 800px;
+  margin: auto;
+  background-color: #000000;
+
+  position: relative;
+}
+
+.hero-wrapper img {
+  width: 1000px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+/*janken*/
+.janken-wrapper {
+  width: 1200px;
+  margin: auto;
+}
+
+/*じゃんけんのタイトル部分*/
+.janken-title {
+  text-align: center;
+  margin: 0;
+  padding: 40px 0;
+  background-color: #f5f4f0;
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.start-button {
+  width: 300px;
+  margin: auto;
+  height: 100px;
+  margin-top: 50px;
+  font-size: 1.6rem;
+  border-color: #778899;
+  background-color: #4169e1;
+  color: #fff;
+  font-weight: bold;
+}
+
+/*プレイヤーの名前*/
+.player-list {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 50px;
+  margin-bottom: 300px;
+}
+
+.player-contents {
+  height: 250px;
+
+  display: flex;
+  /* justify-content: space-between; */
+  flex-flow: column;
+  align-items: center;
+}
+
+/*プレイヤーの名前*/
+.player-me {
+  position: relative;
+
+  width: 600px;
+  /* background-color: red; */
+
+  margin: 0 0 50px 0;
+}
+
+.hand-title {
+  width: 600px;
+
+  font-size: 2.4rem;
+  font-weight: bold;
+  text-align: center;
+
+  margin-bottom: 50px;
+}
+
+.me_bg {
+  width: 300px;
+  margin: auto;
+}
+
+.me_bg img {
+  width: 300px;
+  height: 350px;
+  margin: 30px 0;
+  object-fit: cover;
+}
+
+.me-img img {
+  width: 150px;
+  height: 160px;
+  margin: 30px 0;
+  object-fit: cover;
+
+  border-style: none;
+
+  position: absolute;
+  top: 50%;
+  left: 60%;
+}
+
+/*PC側のイメージ*/
+/****画像を二つ重ねて表示*****/
+.player-princess {
+  position: relative;
+
+  width: 600px;
+  /* background-color: blue; */
+
+  margin: 0 0 50px 0;
+}
+
+.princess_bg {
+  width: 300px;
+  margin: auto;
+}
+
+.princess_bg img {
+  width: 300px;
+  height: 350px;
+  object-fit: cover;
+  position: relative;
+  margin: 30px 0;
+
+  /* margin-bottom: 58px; */
+}
+
+.pc-img img {
+  width: 150px;
+  height: 160px;
+  margin: 30px 0;
+  object-fit: cover;
+
+  border-style: none;
+
+  position: absolute;
+  top: 50%;
+  left: 60%;
+}
+
+.hand-btn-wrapper {
+  width: 640px;
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.hand-btn-wrapper li {
+  padding: 30px 0;
+}
+
+.btn {
+  list-style-type: none;
+  border: 1px solid #666;
+
+  cursor: pointer;
+  text-align: center;
+
+  width: 200px;
+  color: #fff;
+  margin: 0 20px 0 0;
+  background: #432d15;
+  border: none;
+  box-shadow: 10px 10px #f4a460;
+  transition: 0.3s;
+
+  padding: 20px 0;
+}
+
+/* .btn:hover {
+  background: #b0c4de;
+  color: #fff;
+} */
+
+/*押している間だけ*/
+.btn:active {
+  transform: translate3d(0, 5px, 0);
+  background: #432d15;
+  color: #fff;
+
+  top: 4px;
+  box-shadow: 0 5px 0 #000;
+}
+
+.btn-push {
+  transform: translate3d(0, 5px, 0);
+  background: #deb887;
+  color: #fff;
+
+  top: 4px;
+  box-shadow: 0 1px 0 #000;
+}
+
+/* .btn-disabled {
+  background-color: #432d15;
+  box-shadow: none;
+  top: 4px;
+  transform: translate3d(0, 5px, 0);
+} */
+
+/*judgement*/
+.result {
+  display: flex;
+  justify-content: space-between;
+}
+
+.judgement {
+  width: 600px;
+  text-align: center;
+  font-size: 3.6rem;
+  margin: 100px 0 50px 0;
+  transform: translate3d(330px, 0, 0);
+}
+
+/*reset button*/
+.reset {
+  width: 300p;
+  height: 70px;
+  font-size: 2.4rem;
+  background-color: #deb887;
+  border-style: none;
+  padding: 10px 10px;
+  text-align: center;
+  margin: 100px;
+}
+
+.reset:hover {
+  background-color: #f5deb3;
+}
+
+.reset:active {
+  background-color: #f5deb3;
+  transform: translate3d(0, 5px, 0);
+}
+
+/*footer*/
+.footer {
+  height: 100px;
+  background-color: #808080;
+  color: #fff;
+  text-align: center;
+  padding: 30px;
+}
