@@ -1,10 +1,15 @@
+html {
+  font-size: 62.5%; /* 16px x 62.5% = 10px/[rem]*/
+  scroll-behavior: smooth;
+}
+
 #header {
-  height: 200px;
+  height: 100px;
   background-color: yellow;
 }
 
 #main {
-  height: 600px;
+  height: 1000px;
   background-color: palegreen;
 }
 
@@ -13,17 +18,110 @@
   background-color: lightblue;
 }
 
-.player-wrapper {
+/*startボタン*/
+.start_button {
+  width: 100px;
+  height: 50px;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  transform: translate3d(-25px, 0, 0);
+}
+
+.start_button-conts {
+  width: 100px;
+  padding: 10px;
+
+  background-color: #fff;
+  border-style: none;
+
+  cursor: pointer;
+  box-shadow: 5px 5px #b0c4de;
+  transition: 0.3s;
+}
+
+.start_button-conts:active {
+  transform: translate3d(0, 5px, 0);
+  /* background-color: #ffb6c1; */
+
+  box-shadow: 1px 1px 0 #000;
+}
+
+/* player表示全体 */
+.player_wrapper {
   width: 1200px;
   margin: auto;
 
   display: flex;
+  justify-content: center;
 }
 
-.player-conts {
+/* 各playerの個別枠組み */
+.player_conts {
   width: 500px;
   height: 500px;
   background-color: #fff;
 
   margin: 0 50px 0 0;
+}
+
+/* playerの名前 */
+.player_name {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+
+  color: #fff;
+  font-weight: bolder;
+  font-size: 2.4rem;
+
+  background-color: lightpink;
+}
+
+/* playerの画像表示ボックス */
+.player_view-wrapper {
+  height: 450px;
+
+  background-color: #afeeee;
+}
+
+/* playerの手のボックス */
+.player_hand-wrapper {
+  height: 80px;
+  background-color: #fffacd;
+  display: flex;
+  justify-content: space-evenly;
+
+  align-items: center;
+}
+
+.player_hand-conts {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* じゃんけんの手のボタン*/
+.player_hand-list {
+  text-align: center;
+  background-color: #cd5c5c;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bolder;
+  padding: 20px 20px;
+
+  cursor: pointer;
+  box-shadow: 5px 5px #f4a460;
+  transition: 0.3s;
+
+  width: 100px;
+  margin: 0 5px;
+}
+
+/* じゃんけんの手のボタン（押しているとき）*/
+.player_hand-list:active {
+  transform: translate3d(0, 5px, 0);
+  background-color: #ffb6c1;
+
+  box-shadow: 1px 1px 0 #000;
 }
