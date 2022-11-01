@@ -9,6 +9,8 @@ html {
 }
 
 #main {
+  width: 1200px;
+  margin: auto;
   height: 1000px;
   background-color: palegreen;
 }
@@ -20,18 +22,19 @@ html {
 
 /*startボタン*/
 .start_button {
-  width: 100px;
+  width: 500px;
   height: 50px;
   margin: auto;
 
   display: flex;
   align-items: center;
-  transform: translate3d(-25px, 0, 0);
+  transform: translate3d(-5%, 0, 0);
 }
 
 .start_button-conts {
-  width: 100px;
+  width: 120px;
   padding: 10px;
+  margin: 0 5px;
 
   background-color: #fff;
   border-style: none;
@@ -82,8 +85,21 @@ html {
 /* playerの画像表示ボックス */
 .player_view-wrapper {
   height: 450px;
+  width: 400px;
+  margin: auto;
 
   background-color: #afeeee;
+}
+
+.player_view-wrapper img {
+  width: 400px;
+  height: 450px;
+}
+
+/* player1のビデオ表示 */
+#player1_video {
+  width: 400px;
+  height: 450px;
 }
 
 /* playerの手のボックス */
