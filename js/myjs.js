@@ -114,7 +114,7 @@ async function image() {
   await webcam.setup(); // request access to the webcam
   await webcam.play();
 
-  //描画
+  //アニメーションを更新するときにloopを呼び出す
   window.requestAnimationFrame(loop);
 
   // append elements to the DOM
@@ -126,18 +126,28 @@ async function image() {
   }
 
   console.log("end init.");
-
-  return player1_hand_num;
 }
+
+//let marker = 0; //markerの初期値
+let marker = 0;
 
 //モデルを繰り返し実行する
 async function loop() {
-  // console.log("loop func");
   webcam.update(); // update the webcam frame
-  predict();
-  window.requestAnimationFrame(loop); //描画
+  window.requestAnimationFrame(loop);
 
-  return hand_num;
+  let hand_num = await predict(); //predictの戻り値を格納。
+  console.log("hand_num:" + hand_num);
+
+  if (hand_num == 99) {
+    window.requestAnimationFrame(loop); //hand_numが99だったらloopを続ける
+  } else {
+    console.log("end loop: " + marker); //markerが0以外だったらloopを抜ける
+    window.cancelAnimationFrame(loop);
+  }
+
+  //じゃんけん実行
+  // janken(hand_num);
 }
 
 // run the webcam image through the image model
@@ -148,27 +158,38 @@ async function predict() {
   const prediction = await model.predict(webcam.canvas);
   let hand = "";
   let hand_num = 0;
+  let maxValue = 0;
+  let count = 0;
 
   //gu,cho,parの手のprobabilityを表示
   for (let i = 0; i < maxPredictions; i++) {
     const name = prediction[i].className;
-    const value = prediction[i].probability.toFixed(2);
-    const classPrediction = name + ": " + value;
+    const tmpValue = prediction[i].probability.toFixed(2);
+    const classPrediction = name + ": " + tmpValue;
 
     //HTMLに反映
     labelContainer.childNodes[i].innerHTML = classPrediction;
+    if (maxValue < tmpValue) {
+      //もしtmpValueのほうが大きかったら
+      maxValue = tmpValue; //maxValueの値を更新。
+      hand_num = i; //その時のiをhand_numとする。
+    }
 
-    if (value == 1) {
-      // console.log(prediction[i].className);
-      hand = prediction[i].className;
-      // console.log(player1_hand);
-      hand_num = i; //player1のhand番号
-      break;
+    if (i % 3 == 2) {
+      count += 1;
     }
   }
 
+  //maxValueが1だったら(手が確定したら)
+  if (maxValue == 1 && count == 100) {
+    hand = prediction[hand_num].className; //手が確定
+    return hand_num;
+  } else {
+    return 99; //そうじゃなかったら99を返す
+  }
+
   //じゃんけん実行
-  janken(hand_num);
+  // janken(hand_num);
 
   // console.log("koko");
 
@@ -225,11 +246,11 @@ function janken(player1_hand_num) {
   //勝敗判定
   if (player1_hand_num == com_hand_num) {
     hantei_num = 0; //0はあいこ
-  } else if (my_id_num == 0 && com_hand_num == 1) {
+  } else if (player1_hand_num == 0 && com_hand_num == 1) {
     hantei_num = 1; //グーとチョキ。1は私の勝ち
-  } else if (my_id_num == 1 && com_hand_num == 2) {
+  } else if (player1_hand_num == 1 && com_hand_num == 2) {
     hantei_num = 1; //チョキとパー。1は私の勝ち
-  } else if (my_id_num == 2 && com_id_num == 0) {
+  } else if (player1_hand_num == 2 && com_hand_num == 0) {
     hantei_num = 1; //パーとグー。1は私の勝ち
   } else {
     hantei_num = 2; //他のケースではコンピュータの勝ち
