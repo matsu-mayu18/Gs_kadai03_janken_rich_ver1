@@ -91,10 +91,30 @@ html {
   background-color: #afeeee;
 }
 
+/* 要みなおし：relativeとabsoluteの基準が変 */
+.player1_img_relative {
+  position: relative;
+}
+.player1_img_absolute {
+  position: absolute;
+  top: 70%;
+  left: 35%;
+}
+
+.player2_img_relative {
+  position: relative;
+}
+.player2_img_absolute {
+  position: absolute;
+  top: 70%;
+  left: 65%;
+}
+
+/* 
 .player_view-wrapper img {
   width: 400px;
   height: 450px;
-}
+} */
 
 /* player1のビデオ表示 */
 #player1_video {
