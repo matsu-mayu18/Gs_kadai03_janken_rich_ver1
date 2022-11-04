@@ -1,9 +1,6 @@
 // alert("kore");
 
-$(".start_button").on("click", function () {
-  let player1_hand_num = 0; //自分の手の初期値
-  // alert("kore");
-
+$(".player2_select_button").on("click", function () {
   //対戦相手を決める乱数
   player2_num = Math.floor(Math.random() * 5);
 
@@ -18,12 +15,16 @@ $(".start_button").on("click", function () {
   filename = "./img/" + player2_name[player2_num];
   console.log(filename);
 
-  $(".player1_view").html('<div id="player1_video"></div>');
+  $(".player1_view").html('<video id="player1_video"></video>');
   $(".player2_view").children("img").attr("src", filename);
 
-  //画像認識(init ~ predictまで)
-  image();
   // camera_on();
+
+  //画像認識(init ~ predictまで)
+  let player1_hand_num = image();
+
+  //じゃんけん実行
+  janken(player1_hand_num);
 
   // const video = document.getElementById("player1_video");
   // navigator.mediaDevices
@@ -43,7 +44,17 @@ $(".start_button").on("click", function () {
 // 機械学習
 const URL = "https://teachablemachine.withgoogle.com/models/DjPyL46cv/";
 //const URL = "https://teachablemachine.withgoogle.com/models/my_model/";
-let model, webcam, labelContainer, maxPredictions;
+let model, webcam, labelContainer, maxPredictions, canvas;
+
+async function load_model() {
+  const modelURL = URL + "model.json";
+  const metadataURL = URL + "metadata.json";
+
+  //学習済みのモデルの読み込み
+  //ぐー・ちょき・ぱーの取得
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses();
+}
 
 async function image() {
   console.log("start init");
@@ -83,49 +94,55 @@ async function image() {
   console.log("end init.");
 }
 
-//let marker = 0; //markerの初期値
-let marker = 0;
-
 //モデルを繰り返し実行する
 async function loop() {
+  let mark, hand_num;
+
   webcam.update(); // update the webcam frame
+  // await predict(mark, hand_num);
   await predict();
 
+  // if (mark == 1) {
+  //   console.log("[loop]mark:", mark);
+  // } else if (mark == 0) {
+  //   console.log("[loop]mark:", mark);
+  // } else {
+  //   console.log("[loop]mark:", mark);
+  // }
   window.requestAnimationFrame(loop);
 }
 
 // run the webcam image through the image model
 //予測モデルの実行
+// async function predict(mark, hand_num) {
 async function predict() {
   // console.log("predict func");
   // predict can take in an image, video or canvas html element
   const prediction = await model.predict(webcam.canvas);
 
-  let hand = "";
-  let hand_num = 0;
-  let maxValue = 0;
-  let count = 0;
+  // let hand_num = 0;
+  let handValue = [0, 0, 0];
+
+  //markの初期化
+  // mark = 0;
 
   //gu,cho,parの手のprobabilityを表示
   for (let i = 0; i < maxPredictions; i++) {
     const name = prediction[i].className;
-    const tmpValue = prediction[i].probability.toFixed(2);
-    const classPrediction = name + ": " + tmpValue;
+    handValue[i] = prediction[i].probability.toFixed(2);
+    const classPrediction = name + ": " + handValue[i];
 
     //HTMLに反映
     labelContainer.childNodes[i].innerHTML = classPrediction;
 
     //maxValueが1だったら(手が確定したら)
-    if (tmpValue == 1) {
-      hand = prediction[i].className; //手が確定
-      hand_num = i;
-      // break;
-    }
   }
-  console.log("hand_num:" + hand_num);
 
-  //じゃんけん実行
-  janken(hand_num);
+  // console.log(handValue[0], handValue[1], handValue[2]);
+
+  $("#draw").on("click", function () {
+    // alert("on");
+  });
 
   //処理を止める（？）
 

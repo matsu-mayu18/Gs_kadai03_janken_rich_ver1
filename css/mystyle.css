@@ -21,7 +21,7 @@ html {
 }
 
 /*startボタン*/
-.start_button {
+.player2_select_button {
   width: 500px;
   height: 50px;
   margin: auto;
@@ -31,7 +31,7 @@ html {
   transform: translate3d(-5%, 0, 0);
 }
 
-.start_button-conts {
+.button-conts {
   width: 120px;
   padding: 10px;
   margin: 0 5px;
@@ -44,11 +44,16 @@ html {
   transition: 0.3s;
 }
 
-.start_button-conts:active {
+.button-conts:active {
   transform: translate3d(0, 5px, 0);
   /* background-color: #ffb6c1; */
 
   box-shadow: 1px 1px 0 #000;
+}
+
+.draw-button-wrapper {
+  width: 1200px;
+  margin: auto;
 }
 
 /* player表示全体 */
