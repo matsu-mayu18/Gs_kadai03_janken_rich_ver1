@@ -44,47 +44,6 @@ $(".start_button").on("click", function () {
 const URL = "https://teachablemachine.withgoogle.com/models/DjPyL46cv/";
 let model, webcam, labelContainer, maxPredictions;
 
-function camera_on() {
-  const cameraSize = { w: 400, h: 450 };
-  const canvasSize = { w: 400, h: 450 };
-  const resolution = { w: 1080, h: 720 };
-  let video;
-  let media;
-  let canvas;
-  let canvasCtx;
-  video = document.createElement("video");
-  video.id = "video";
-  video.width = cameraSize.w;
-  video.height = cameraSize.h;
-  video.autoplay = true;
-  document.getElementById("player1_video").appendChild(video);
-
-  media = navigator.mediaDevices
-    .getUserMedia({
-      audio: false,
-      video: {
-        width: { ideal: resolution.w },
-        height: { ideal: resolution.h },
-      },
-    })
-    .then(function (stream) {
-      video.srcObject = stream;
-    });
-
-  // canvas要素をつくる
-  canvas = document.createElement("canvas");
-  canvas.id = "canvas";
-  canvas.width = canvasSize.w;
-  canvas.height = canvasSize.h;
-  // document.getElementById("canvasPreview").appendChild(canvas);
-
-  // コンテキストを取得する
-  canvasCtx = canvas.getContext("2d");
-
-  // video要素の映像をcanvasに描画する
-  _canvasUpdate();
-}
-
 function _canvasUpdate() {
   canvasCtx.drawImage(video, 0, 0, canvas.width, canvas.height);
   requestAnimationFrame(_canvasUpdate);
@@ -143,7 +102,7 @@ async function loop() {
     window.requestAnimationFrame(loop); //hand_numが99だったらloopを続ける
   } else {
     console.log("end loop: " + marker); //markerが0以外だったらloopを抜ける
-    window.cancelAnimationFrame(loop);
+    // window.cancelAnimationFrame(loop);
   }
 
   //じゃんけん実行
@@ -156,6 +115,7 @@ async function predict() {
   // console.log("predict func");
   // predict can take in an image, video or canvas html element
   const prediction = await model.predict(webcam.canvas);
+
   let hand = "";
   let hand_num = 0;
   let maxValue = 0;
@@ -175,13 +135,13 @@ async function predict() {
       hand_num = i; //その時のiをhand_numとする。
     }
 
-    if (i % 3 == 2) {
-      count += 1;
-    }
+    // if (i % 3 == 2) {
+    //   count += 1;
+    // }
   }
 
   //maxValueが1だったら(手が確定したら)
-  if (maxValue == 1 && count == 100) {
+  if (maxValue == 1) {
     hand = prediction[hand_num].className; //手が確定
     return hand_num;
   } else {
@@ -190,7 +150,6 @@ async function predict() {
 
   //じゃんけん実行
   // janken(hand_num);
-
   // console.log("koko");
 
   //処理を止める（？）
