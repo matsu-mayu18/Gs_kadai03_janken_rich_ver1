@@ -97,17 +97,18 @@ html {
 }
 .player1_img_absolute {
   position: absolute;
-  top: 70%;
+  top: 45%;
   left: 35%;
 }
 
 .player2_img_relative {
   position: relative;
+  object-fit: cover;
 }
 .player2_img_absolute {
   position: absolute;
-  top: 70%;
-  left: 65%;
+  top: 45%;
+  left: 90%;
 }
 
 /* 

@@ -42,12 +42,8 @@ $(".start_button").on("click", function () {
 
 // 機械学習
 const URL = "https://teachablemachine.withgoogle.com/models/DjPyL46cv/";
+//const URL = "https://teachablemachine.withgoogle.com/models/my_model/";
 let model, webcam, labelContainer, maxPredictions;
-
-function _canvasUpdate() {
-  canvasCtx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  requestAnimationFrame(_canvasUpdate);
-}
 
 async function image() {
   console.log("start init");
@@ -93,20 +89,9 @@ let marker = 0;
 //モデルを繰り返し実行する
 async function loop() {
   webcam.update(); // update the webcam frame
+  await predict();
+
   window.requestAnimationFrame(loop);
-
-  let hand_num = await predict(); //predictの戻り値を格納。
-  console.log("hand_num:" + hand_num);
-
-  if (hand_num == 99) {
-    window.requestAnimationFrame(loop); //hand_numが99だったらloopを続ける
-  } else {
-    console.log("end loop: " + marker); //markerが0以外だったらloopを抜ける
-    // window.cancelAnimationFrame(loop);
-  }
-
-  //じゃんけん実行
-  // janken(hand_num);
 }
 
 // run the webcam image through the image model
@@ -129,28 +114,18 @@ async function predict() {
 
     //HTMLに反映
     labelContainer.childNodes[i].innerHTML = classPrediction;
-    if (maxValue < tmpValue) {
-      //もしtmpValueのほうが大きかったら
-      maxValue = tmpValue; //maxValueの値を更新。
-      hand_num = i; //その時のiをhand_numとする。
+
+    //maxValueが1だったら(手が確定したら)
+    if (tmpValue == 1) {
+      hand = prediction[i].className; //手が確定
+      hand_num = i;
+      // break;
     }
-
-    // if (i % 3 == 2) {
-    //   count += 1;
-    // }
   }
-
-  //maxValueが1だったら(手が確定したら)
-  if (maxValue == 1) {
-    hand = prediction[hand_num].className; //手が確定
-    return hand_num;
-  } else {
-    return 99; //そうじゃなかったら99を返す
-  }
+  console.log("hand_num:" + hand_num);
 
   //じゃんけん実行
-  // janken(hand_num);
-  // console.log("koko");
+  janken(hand_num);
 
   //処理を止める（？）
 
